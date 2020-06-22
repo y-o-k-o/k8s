@@ -1,0 +1,40 @@
+#cloud-config
+timezone: Asia/Tokyo
+locale: ja_JP.utf8
+package_upgrade: true
+
+users:
+- name: ubuntu
+  groups:
+    - docker
+
+packages:
+ - apt-transport-https
+ - ca-certificates
+ - curl
+ - gnupg-agent
+ - software-properties-common
+ - build-essential
+ - file
+ - git
+ - zsh
+
+runcmd:
+  # docker
+  - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
+  - add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+  - apt-get update -y
+  - apt-get install -y docker-ce docker-ce-cli containerd.io
+  - systemctl start docker
+  - systemctl enable docker
+  # kubectl
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+  - chmod +x ./kubectl
+  - mv ./kubectl /usr/local/bin/kubectl
+  # kind
+  - curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.8.1/kind-$(uname)-amd64
+  - chmod +x ./kind
+  - mv ./kind /usr/local/bin/kind
+  # shell
+  - chsh ubuntu -s /usr/bin/zsh
+
