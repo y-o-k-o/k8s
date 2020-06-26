@@ -37,4 +37,16 @@ runcmd:
   - mv ./kind /usr/local/bin/kind
   # shell
   - chsh ubuntu -s /usr/bin/zsh
-
+  # prezto
+  - curl -o /home/ubuntu/install_prezto.sh https://raw.githubusercontent.com/y-o-k-o/k8s/master/zsh-env/install_prezto.sh
+  - chmod +x /home/ubuntu/install_prezto.sh
+  - sh -c /home/ubuntu/install_prezto.sh
+  - rm /home/ubuntu/install_prezto.sh 
+  - curl -o /home/ubuntu/.zshrc https://raw.githubusercontent.com/y-o-k-o/k8s/master/zsh-env/.zshrc 
+  - curl -o /home/ubuntu/.p10k.zsh https://raw.githubusercontent.com/y-o-k-o/k8s/master/zsh-env/.p10k.zsh 
+  - curl -o /home/ubuntu/.zprezto/runcoms/zpreztorc https://raw.githubusercontent.com/y-o-k-o/k8s/master/zsh-env/.zpreztorc 
+  # stern(log tail)
+  - wget -O /usr/local/bin/stern https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64
+  - chmod +x /usr/local/bin/stern
+  #
+  - chown ubuntu:ubuntu -R /home/ubuntu
