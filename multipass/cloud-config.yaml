@@ -48,5 +48,7 @@ runcmd:
   # stern(log tail)
   - wget -O /usr/local/bin/stern https://github.com/wercker/stern/releases/download/1.11.0/stern_linux_amd64
   - chmod +x /usr/local/bin/stern
+  # local registry
+  - docker run -d -p 5000:5000 --restart=always --name registry registry:2
   #
   - chown ubuntu:ubuntu -R /home/ubuntu
